@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina Skin - AI Skincare Consultant</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Background Elements -->
+        <div class="glow-orb" id="orb-1"></div>
+        <div class="glow-orb" id="orb-2"></div>
+
+        <main id="main-content">
+            <!-- Welcome Screen -->
+            <section id="welcome-screen" class="screen active">
+                <div class="hero-content">
+                    <span class="badge">AI-Powered Analysis</span>
+                    <h1>Lumina Skin</h1>
+                    <p>Unlock the secrets of your skin with our advanced AI analysis. Professional consulting, tailored
+                        just for you.</p>
+                    <button id="start-btn" class="primary-btn">Begin Analysis</button>
+                </div>
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1596462502278-27bfdc4033c8?auto=format&fit=crop&q=80&w=800"
+                        alt="Skincare Model" class="parallax-img">
+                </div>
+            </section>
+
+            <!-- Analysis Screen -->
+            <section id="analysis-screen" class="screen">
+                <div class="camera-module">
+                    <div class="video-container">
+                        <video id="webcam" autoplay playsinline></video>
+                        <canvas id="photo-canvas" style="display:none;"></canvas>
+                        <div class="face-guide">
+                            <div class="guide-circle"></div>
+                        </div>
+                        <div id="captured-preview" class="captured-preview"></div>
+                    </div>
+                    <div class="controls">
+                        <button id="capture-btn" class="capture-btn">
+                            <div class="inner-circle"></div>
+                        </button>
+                        <button id="upload-trigger-btn" class="secondary-btn">Upload Photo</button>
+                        <input type="file" id="image-upload" accept="image/*" style="display:none;">
+
+                        <button id="retake-btn" class="secondary-btn" style="display:none;">Retake</button>
+                        <button id="analyze-btn" class="primary-btn" style="display:none;">Analyze Now</button>
+                    </div>
+                    <p class="guide-text">Position your face within the circle and tap to capture.</p>
+                </div>
+            </section>
+
+            <!-- Loading Screen -->
+            <section id="loading-screen" class="screen">
+                <div class="loading-content">
+                    <div class="spinner">
+                        <div class="double-bounce1"></div>
+                        <div class="double-bounce2"></div>
+                    </div>
+                    <h2 id="loading-text">Analyzing Skin Texture...</h2>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Screen -->
+            <section id="results-screen" class="screen">
+                <header class="results-header">
+                    <h2>Your Skin Profile</h2>
+                    <button id="reset-btn" class="text-btn">Start Over</button>
+                </header>
+
+                <div class="results-grid">
+                    <div class="main-result-card glass">
+                        <div class="profile-summary">
+                            <div id="result-photo" class="result-photo"></div>
+                            <div class="overall-score">
+                                <span class="score-label">Health Score</span>
+                                <span class="score-value">84</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metrics-grid">
+                        <div class="metric-card glass" data-metric="pore">
+                            <span class="metric-icon">✨</span>
+                            <h3>Pores</h3>
+                            <div class="metric-bar">
+                                <div class="fill" style="width: 0%;"></div>
+                            </div>
+                            <span class="metric-status">-</span>
+                        </div>
+                        <div class="metric-card glass" data-metric="texture">
+                            <span class="metric-icon">💧</span>
+                            <h3>Texture</h3>
+                            <div class="metric-bar">
+                                <div class="fill" style="width: 0%;"></div>
+                            </div>
+                            <span class="metric-status">-</span>
+                        </div>
+                        <div class="metric-card glass" data-metric="acne">
+                            <span class="metric-icon">🌿</span>
+                            <h3>Acne</h3>
+                            <div class="metric-bar">
+                                <div class="fill" style="width: 0%;"></div>
+                            </div>
+                            <span class="metric-status">-</span>
+                        </div>
+
+                        <div class="metric-card glass" data-metric="wrinkle">
+                            <span class="metric-icon">🌀</span>
+                            <h3>Wrinkles</h3>
+                            <div class="metric-bar">
+                                <div class="fill" style="width: 0%;"></div>
+                            </div>
+                            <span class="metric-status">-</span>
+                        </div>
+                        <div class="metric-card glass" data-metric="hydration">
+                            <span class="metric-icon">💧</span>
+                            <h3>Hydration</h3>
+                            <div class="metric-bar">
+                                <div class="fill" style="width: 0%;"></div>
+                            </div>
+                            <span class="metric-status">-</span>
+                        </div>
+                    </div>
+
+                    <div class="recommendations-card glass">
+                        <h3>Lumina Recommendation</h3>
+                        <ul class="rec-list">
+                            <li>
+                                <span class="rec-icon">🧴</span>
+                                <div class="rec-text">
+                                    <strong>Hyaluronic Serum</strong>
+                                    <p>Increase hydration levels focusing on the cheek area.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="rec-icon">☀️</span>
+                                <div class="rec-text">
+                                    <strong>SPF 50+ Broad Spectrum</strong>
+                                    <p>Maintain your excellent wrinkle prevention with daily sun care.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="app-footer">
+            <p>&copy; 2026 Lumina Skin AI. Inspired by Perfect Corp.</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>

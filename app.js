@@ -30,6 +30,7 @@ const App = {
         this.loadingText = document.getElementById('loading-text');
         this.progressFill = document.querySelector('.progress-fill');
         this.resultPhoto = document.getElementById('result-photo');
+        this.resultOverlay = document.getElementById('result-overlay');
     },
 
     bindEvents() {
@@ -318,11 +319,11 @@ const App = {
 
     displayResults(outputs) {
         const metricMap = {
-            'pore': { label: 'Pores', rec: 'Use a clay mask once a week to deeply clean pores.' },
-            'texture': { label: 'Texture', rec: 'Exfoliate with a gentle AHA/BHA solution to smooth skin surface.' },
-            'acne': { label: 'Acne', rec: 'Apply benzoyl peroxide or salicylic acid to active spots.' },
-            'wrinkle': { label: 'Wrinkles', rec: 'Incorporate Retinol and SPF into your daily routine.' },
-            'hydration': { label: 'Hydration', rec: 'Use a hyaluronic acid serum and drink more water.' }
+            'pore': { label: 'Pores', rec: 'Use a clay mask once a week to deeply clean pores.', overlay: null },
+            'texture': { label: 'Texture', rec: 'Exfoliate with a gentle AHA/BHA solution to smooth skin surface.', overlay: null },
+            'acne': { label: 'Acne', rec: 'Apply benzoyl peroxide or salicylic acid to active spots.', overlay: null },
+            'wrinkle': { label: 'Wrinkles', rec: 'Incorporate Retinol and SPF into your daily routine.', overlay: null },
+            'hydration': { label: 'Hydration', rec: 'Use a hyaluronic acid serum and drink more water.', overlay: null }
         };
 
         let totalScore = 0;
@@ -335,6 +336,9 @@ const App = {
                 const score = item.ui_score;
                 totalScore += score;
                 count++;
+
+                // Store overlay if available
+                ui.overlay = item.overlay_image_url || item.mask_image_url || null;
 
                 const card = document.querySelector(`[data-metric="${item.type}"]`);
                 if (card) {
@@ -349,6 +353,20 @@ const App = {
                     } else {
                         fill.classList.remove('alert');
                     }
+
+                    // Add Hover Effect for Image Analysis
+                    card.addEventListener('mouseenter', () => {
+                        if (ui.overlay) {
+                            this.resultOverlay.src = ui.overlay;
+                            this.resultOverlay.classList.add('active');
+                            card.classList.add('active');
+                        }
+                    });
+
+                    card.addEventListener('mouseleave', () => {
+                        this.resultOverlay.classList.remove('active');
+                        card.classList.remove('active');
+                    });
                 }
             }
         });
@@ -397,6 +415,8 @@ const App = {
         this.btns.retake.style.display = 'none';
         this.btns.analyze.style.display = 'none';
         this.progressFill.style.width = '0%';
+        this.resultOverlay.src = '';
+        this.resultOverlay.classList.remove('active');
         this.switchScreen('welcome');
     }
 };

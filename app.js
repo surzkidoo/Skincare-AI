@@ -195,7 +195,7 @@ const App = {
                 },
                 body: JSON.stringify({
                     src_file_id: fileId,
-                    dst_actions: ["wrinkle", "pore", "texture", "acne"],
+                    dst_actions: ["wrinkle", "pore", "texture", "acne", "oiliness", "radiance", "eye_bag", "moisture"],
                     miniserver_args: {
                         enable_mask_overlay: true,
                         enable_dark_background_hd_pore: true,
@@ -323,7 +323,10 @@ const App = {
             'texture': { label: 'Texture', rec: 'Exfoliate with a gentle AHA/BHA solution to smooth skin surface.', overlay: null },
             'acne': { label: 'Acne', rec: 'Apply benzoyl peroxide or salicylic acid to active spots.', overlay: null },
             'wrinkle': { label: 'Wrinkles', rec: 'Incorporate Retinol and SPF into your daily routine.', overlay: null },
-            'hydration': { label: 'Hydration', rec: 'Use a hyaluronic acid serum and drink more water.', overlay: null }
+            'moisture': { label: 'Hydration', rec: 'Use a hyaluronic acid serum and drink more water.', overlay: null },
+            'oiliness': { label: 'Oiliness', rec: 'Use an oil-free moisturizer and blotting papers.', overlay: null },
+            'radiance': { label: 'Radiance', rec: 'Add Vitamin C serum to your morning routine for glow.', overlay: null },
+            'eye_bag': { label: 'Eye Bags', rec: 'Get enough sleep and use a caffeine-infused eye cream.', overlay: null }
         };
 
         let totalScore = 0;
@@ -337,8 +340,8 @@ const App = {
                 totalScore += score;
                 count++;
 
-                // Store overlay if available
-                ui.overlay = item.overlay_image_url || item.mask_image_url || null;
+                // Store overlay if available (Handle both single string and array from API)
+                ui.overlay = (item.mask_urls && item.mask_urls[0]) || item.overlay_image_url || item.mask_image_url || null;
 
                 const card = document.querySelector(`[data-metric="${item.type}"]`);
                 if (card) {
